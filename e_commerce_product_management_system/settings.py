@@ -84,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'product_management_db',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'product_user',
+        'PASSWORD': 'projectproductmanagement248@',
         'HOST': 'localhost',
         'PORT': '3306',
     }

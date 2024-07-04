@@ -4,22 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier un Produit</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">E-commerce Product Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category_index' %}">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto rounded border p-4 m-4">
             <h2 class="text-center mb-5">Modifier un Produit</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Nom:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name" value="{{ form.name.value }}">
+                        <p class="text-danger">{{ form.name.errors }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Description:</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="description">{{ form.description.value }}</textarea>
+                        <p class="text-danger">{{ form.description.errors }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Prix:</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" name="price" step="0.01" min="0"
+                               value="{{ form.price.value }}">
+                        <p class="text-danger">{{ form.price.errors }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Catégorie:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="category">
+                            {% for category in form.category.field.queryset %}
+                                <option value="{{ category.id }}"
+                                        {% if category.id == form.category.value %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <p class="text-danger">{{ form.category.errors }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Stock:</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" name="stock" value="{{ form.stock.value }}">
+                        <p class="text-danger">{{ form.stock.errors }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Image:</label>
+                    <div class="col-sm-8">
+                        {% if form.instance.image %}
+                            <img src="{{ form.instance.image.url }}" alt="Current Image" class="img-thumbnail mb-2"
+                                 style="max-width: 200px;">
+                        {% endif %}
+                        <input type="file" class="form-control" name="image">
+                        <p class="text-danger">{{ form.image.errors }}</p>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="offset-sm-4 col-sm-4 d-grid">
                         <button type="submit" class="btn btn-primary">Soumettre</button>
@@ -32,5 +111,9 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

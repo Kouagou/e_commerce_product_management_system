@@ -8,7 +8,9 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'products', ProductViewSet)
 
 urlpatterns = [
-    path('', views.product_index, name='product_index'),
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
     path('products/', views.product_index, name='product_index'),
     path('products/new/', views.product_show_create_page, name='product_show_create_page'),
     path('products/edit/<int:id>/', views.product_edit, name='product_edit'),

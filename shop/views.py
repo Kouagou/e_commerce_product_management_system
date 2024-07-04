@@ -31,8 +31,7 @@ def products_by_category(request, category_id):
 
 def product_index(request):
     products = Product.objects.all()
-    categories = Category.objects.all()
-    return render(request, 'product/index.html', {'products': products, 'categories': categories})
+    return render(request, 'product/index.html', {'products': products})
 
 
 def product_show_create_page(request):
@@ -43,7 +42,7 @@ def product_show_create_page(request):
             return redirect('product_index')
     else:
         form = ProductForm()
-    return render(request, 'product/new.html', {'form': form})
+    return render(request, 'product/new.html', {'form': form, 'categories': Category.objects.all()})
 
 
 def product_edit(request, id):
@@ -56,6 +55,18 @@ def product_edit(request, id):
     else:
         form = ProductForm(instance=product)
     return render(request, 'product/edit.html', {'form': form, 'product': product})
+
+
+def index(request):
+    return render(request, 'index.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
 
 
 def product_delete(request, id):
